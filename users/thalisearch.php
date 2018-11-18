@@ -140,52 +140,15 @@ if($_GET)
         <input type="button" name="cancel" value="cancel" />
         <input type="button" name="save" value="save"/>
       </div>
-              <table class="table table-striped table-hover">
-
-                <thead>
-
-                  <tr>
-                    <th>Pay Hoob</th>
-                    <th>Stop Thaali</th>
-                    <th>Thali No</th>
-                    <th>Name</th>
-                    <th>Mobile No</th>
-                    <th>Active</th>
-                    <th>Transporter</th>
-                    <th>Address</th>
-                    <th>Start Date</th>
-                    <th>Stop Date</th>
-                    <th>Hub pending</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <?php
-                    while($values = mysqli_fetch_assoc($result))
-                    {
-                  ?>
-                  <tr>
-                    <td><a href="#" data-key="payhoob" data-thali="<?php echo $values['Thali']; ?>">Pay Hoob</a></td>
-                    <td><?php
-                      if($values['Active'] == '1') {?>
-                        <a href="#" data-key="stopthaali" data-thali="<?php echo $values['Thali']; ?>" data-active="0">Stop Thaali</a>
-                        <?php }else{ ?>
-                        <a href="#" data-key="stopthaali" data-thali="<?php echo $values['Thali']; ?>" data-active="1">Start Thaali</a>
-                        <?php } ?>
-                        </td>
-                    <td><?php echo $values['Thali']; ?></td>
-                    <td><?php echo $values['NAME']; ?></td>
-                    <td><?php echo $values['CONTACT']; ?></td>
-                    <td><?php echo ($values['Active'] == '1') ? 'Yes' : 'No'; ?></td>
-                    <td><?php echo $values['Transporter']; ?></td>
-                    <td><?php echo $values['Full_Address']; ?></td>
-                    <td class="hijridate"><?php echo $values['Thali_start_date']; ?></td>
-                    <td class="hijridate"><?php echo $values['Thali_stop_date']; ?></td>
-                    <td><?php echo $values['Total_Pending']; ?></td>
-                  </tr>
-                  <?php } ?>
-                </tbody>
-              </table> 
+             <?php 
+             if(mysqli_num_rows($result) > 1)
+                include('_thalisearch_multiple.php');
+              else if(mysqli_num_rows($result) == 1)
+                include('_thalisearch_single.php');
+              else
+                echo "No records found";
+             ?>
+              
             </div>
           </div>
           </div>
@@ -196,7 +159,6 @@ if($_GET)
 
     </div>
   <?php include('_bottomJS.php'); ?>
-  <script src="./src/custom.js"></script>
   <script>
     $(function(){
       var receiptForm = $('#receiptForm');
@@ -245,6 +207,19 @@ if($_GET)
           }
         });
       });
+
+      $('[data-key="stoppermanant"]').click(function() {
+        $.post("stop_permanant.php",
+        {
+          Thaliid: $(this).data("thali"),
+          date: $('[name="receipt_date"]').val()
+        },
+        function(data,status){
+            alert("Thali Stopped Successfully and Number released to be re-used");
+            location.reload();
+        });
+      });
+
       <?php if($_GET): ?>
         window.location = '#tables';
       <?php endif; ?>

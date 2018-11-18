@@ -65,7 +65,7 @@ $sql = "INSERT INTO thalilist (
   mysqli_query($link,$sql) or die(mysqli_error($link));
   mysqli_close($link);
 $msgvar = "Salaam ".$firstname."bhai,<br><br>New Registration form for Faiz ul Mawaid il Burhaniyah thali has been successfully submitted.<br>
-<b>Please visit faiz with xerox of ITS card and 2700 Hub + 500 Registration to get the thali activated.</b><br><br>
+<b>Please visit faiz with xerox of ITS card to get the thali activated.</b><br><br>
 Faiz Address<br>Shop Near Gold Gym,<br>Lane adjacent to Satyanand Hospital,<br>Between Badshah Nagar and Sheetal Petrol Pump<br><br>
 Office Time - 9 to 11 AM, Monday to Saturday.<br>
 For any concerns mail help@faizstudents.com";
@@ -77,7 +77,7 @@ $mg->sendMessage($domain, array('from'    => 'admin@faizstudents.com',
                                 'html'    => $msgvar));
 
 echo ("<SCRIPT LANGUAGE='JavaScript'>
-    window.alert('Form has been successfully submitted.You need to visit faiz office with xerox of ITS card and 2700 Hub to get the thali started. Address: Shop Near Gold Gym,Lane adjacent to Satyanand Hospital, Office Time - 9 to 11 AM.')
+    window.alert('Form has been successfully submitted.You need to visit faiz office with xerox of ITS card and 8000 Hub to get the thali started. Address: Shop Near Gold Gym,Lane adjacent to Satyanand Hospital, Office Time - 9 to 11 AM.')
     window.location.href='index.php';
     </SCRIPT>");
 }
