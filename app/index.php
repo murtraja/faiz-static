@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 else {
     $post = file_get_contents('php://input');
     $post = json_decode($post, true);
-    var_dump($post);
+    // var_dump($post);
     $idToken = $post['idToken'];
     $fcmToken = $post['fcmToken'];
     $creds = helper_getCredsAfterIdVerification($idToken);
@@ -27,11 +27,11 @@ else {
         echo "FAIL";
         return;
     }
-    $row = mysqli_fetch_array($result);
+    $row = mysqli_fetch_assoc($result);
     // now we have got the user's information from our database
     $query = "select * from appUser where email_id = '$email'";
     $result = mysqli_query($link, $query);
-    $result = mysqli_fetch_array($result);
+    $result = mysqli_fetch_assoc($result);
     if($result) {
         // update it
         $query = "update appUser set fcm_token = '$fcmToken' where email_id='$email'";
@@ -40,7 +40,8 @@ else {
         $query = "insert into appUser (email_id, fcm_token) values ('$email', '$fcmToken')";
     }
     $result = mysqli_query($link, $query);
-    
-    echo "PASS";
+    // var_dump($row);
+    $response = array('name' => $row['NAME']);
+    echo(json_encode($response));
 }
 ?>
