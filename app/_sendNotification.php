@@ -1,19 +1,9 @@
 <?php
-require_once '../vendor/autoload.php';
-require_once './_credentials.php';
+// require_once '../vendor/autoload.php';
+require_once './_firebase_connection.php';
 
-use Kreait\Firebase\Factory;
-use Kreait\Firebase\ServiceAccount;
-use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
-
-// This assumes that you have placed the Firebase credentials in the same directory
-// as this PHP file.
-$serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/admin/_credentials.json');
-
-$firebase = (new Factory)
-    ->withServiceAccount($serviceAccount)
-    ->create();
+use Kreait\Firebase\Messaging\CloudMessage;
 
 $messaging = $firebase->getMessaging();
 
